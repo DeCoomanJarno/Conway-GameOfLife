@@ -1,9 +1,11 @@
 #pragma once
 #include "GameTemplate.h"
+#include "TMatrix.h"
+
 class GameOfLife final: public GameTemplate
 {
 public:
-	GameOfLife() = default;
+	GameOfLife(const int scale = 1);
 	~GameOfLife() override = default;
 
 	GameOfLife(const GameOfLife& other) = delete;
@@ -11,8 +13,14 @@ public:
 	GameOfLife& operator=(const GameOfLife& other) = delete;
 	GameOfLife& operator=(GameOfLife&& other) noexcept = delete;
 
-	void HandleEvents(const SDL_Event& event) override{}
-	void Update() override{}
-	void Render() override{}
+	void HandleEvents(const SDL_Event& event) override;
+	void Update() override;
+	void Render() override;
+private:
+	static void RenderPixel(int x, int y);
+	bool IsAlive(int x, int y) const;
+	TMatrix<bool>* m_pGrid;
+	TMatrix<bool>* m_pBuffer;
+	const int m_Scale = 1;
 };
 

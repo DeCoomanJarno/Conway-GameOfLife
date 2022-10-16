@@ -27,6 +27,9 @@
     <ClCompile Include="GameOfLife.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="TMatrix.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameTemplate.h">
@@ -39,6 +42,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GameOfLife.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WindowContent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TMatrix.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

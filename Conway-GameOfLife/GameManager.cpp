@@ -40,7 +40,6 @@ void GameManager::SetActiveGame(GameTemplate* pGame)
 	m_pCurGame = pGame;
 }
 
-
 void GameManager::CleanUp()
 {
 	m_pCurGame = nullptr;

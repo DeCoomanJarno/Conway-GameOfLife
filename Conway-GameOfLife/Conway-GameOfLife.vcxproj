@@ -151,11 +151,14 @@
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="GameOfLife.cpp" />
     <ClCompile Include="GameTemplate.cpp" />
+    <ClCompile Include="TMatrix.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="GameOfLife.h" />
     <ClInclude Include="GameTemplate.h" />
+    <ClInclude Include="TMatrix.h" />
+    <ClInclude Include="WindowContent.h" />
     <ClInclude Include="Singleton.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

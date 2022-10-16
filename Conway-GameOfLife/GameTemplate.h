@@ -13,7 +13,7 @@ public:
 
 	virtual void Update(){}
 	virtual void Render(){}
-	virtual void HandleEvents(const SDL_Event& event){}
+	virtual void HandleEvents(const SDL_Event&){}
 
 private:
 };

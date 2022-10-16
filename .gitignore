@@ -33,11 +33,10 @@
 x64
 .vs
 Debug
-
+Conway-GameOfLife/x64
+Conway-GameOfLife/Debug
 [Dd]ebug/
-[Dd]ebugPublic/
 [Rr]elease/
-[Rr]eleases/
 x64/
 x86/
 [Ww][Ii][Nn]32/

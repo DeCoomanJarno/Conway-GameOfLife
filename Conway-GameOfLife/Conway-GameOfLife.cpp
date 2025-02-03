@@ -1,14 +1,14 @@
-
+#include "SDL.h"
 #include "GameManager.h"
 #include "GameOfLife.h"
-#include "SDL.h"
 #include "WindowContent.h"
-#undef main
+#undef main  // Not needed anymore but doesn't hurt
+
 
 void InitGames();
-void HandleInput();
+void HandleInput(bool&);
 
-int main() 
+int main(int argc, char* argv[])
 {
 	// -- Create Window --
 	auto& windowContent = WindowContent::GetInstance();
@@ -35,8 +35,7 @@ int main()
 	bool isRunning = true;
 	while (isRunning)
 	{
-		HandleInput();
-		GameManager::GetInstance().HandleEvents(isRunning);
+		HandleInput(isRunning);
 		GameManager::GetInstance().Update();
 		GameManager::GetInstance().Render();
 	}
@@ -44,6 +43,8 @@ int main()
 	// -- Free Memory --
 	GameManager::GetInstance().CleanUp();
 
+	SDL_DestroyRenderer(windowContent.m_pRenderer);
+	SDL_DestroyWindow(windowContent.m_pWindow);
 	SDL_Quit();
 
 	return 0;
@@ -56,7 +57,7 @@ void InitGames()
 	gameManager.AddGame(new GameOfLife());
 }
 
-void HandleInput()
+void HandleInput(bool& isRunning)
 {
 	SDL_Event event;
 	while (SDL_PollEvent(&event)) {
@@ -70,5 +71,10 @@ void HandleInput()
 				gameManager.AddGame(new GameOfLife(scancode - SDL_SCANCODE_1 + 1));
 			}
 		}
+		else if(event.type == SDL_QUIT)
+		{
+			isRunning = false;
+		}
 	}
+	GameManager::GetInstance().HandleEvents(event);
 }

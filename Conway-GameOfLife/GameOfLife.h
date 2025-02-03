@@ -6,7 +6,7 @@ class GameOfLife final: public GameTemplate
 {
 public:
 	GameOfLife(const int scale = 1);
-	~GameOfLife() override = default;
+	~GameOfLife() override;
 
 	GameOfLife(const GameOfLife& other) = delete;
 	GameOfLife(GameOfLife&& other) noexcept = delete;
@@ -15,6 +15,7 @@ public:
 
 	void HandleEvents(const SDL_Event& event) override;
 	void Update() override;
+	void Resize(int new_width, int new_height);
 	void Render() override;
 private:
 	static void RenderPixel(int x, int y);

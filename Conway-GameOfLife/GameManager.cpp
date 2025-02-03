@@ -1,16 +1,12 @@
 #include "GameManager.h"
 #include <algorithm>
+#include <iostream>
 
-void GameManager::HandleEvents(bool& isRunning) const
+void GameManager::HandleEvents(SDL_Event event) const
 {
-	SDL_Event event;
-	SDL_PollEvent(&event);
-
-	if (event.type == SDL_QUIT)
-		isRunning = false;
-
-	m_pCurGame->HandleEvents(event);
+	m_pCurGame->HandleEvents(event);  // Handle events specific to your game
 }
+
 
 void GameManager::Update() const
 {

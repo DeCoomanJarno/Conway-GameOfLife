@@ -18,7 +18,7 @@ public:
 
 	void Update() const;
 	void Render() const;
-	void HandleEvents(bool& isRunning) const;
+	void HandleEvents(SDL_Event event) const;
 
 	void CleanUp();
 

@@ -24,7 +24,6 @@
 *.lai
 *.la
 *.a
-*.lib
 
 # Executables
 *.exe
@@ -42,3 +41,7 @@ x86/
 [Ww][Ii][Nn]32/
 [Aa][Rr][Mm]/
 [Aa][Rr][Mm]64/
+
+# Explicitly include the x64 and x86 folders in SDL/lib
+!SDL2/lib/x64/
+!SDL2/lib/x86/

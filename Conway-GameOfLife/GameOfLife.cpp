@@ -28,7 +28,17 @@ GameOfLife::GameOfLife(const int scale)
 	}
 }
 
-void GameOfLife::HandleEvents(const SDL_Event& )
+GameOfLife::~GameOfLife()
+{
+	delete m_pGrid;
+	m_pGrid = nullptr;
+
+	delete m_pBuffer;
+	m_pBuffer = nullptr;
+}
+
+
+void GameOfLife::HandleEvents(const SDL_Event& sdlevent)
 {
 }
 
@@ -40,8 +50,6 @@ void GameOfLife::Update()
 	{
 		for (int y = 0; y < height;y++)
 		{
-			if(x == 26 && y == 16)
-				continue;
 			m_pBuffer->Get(x, y) = IsAlive(x, y);
 		}
 	}
@@ -54,8 +62,71 @@ void GameOfLife::Update()
 	}
 }
 
+void GameOfLife::Resize(int newWidth, int newHeight)
+{
+	int curWidth = m_pGrid->Rows();
+	int curHeight = m_pGrid->Cols();
+
+	// Create a new TMatrix with the requested size
+	TMatrix<bool>* newGrid = new TMatrix<bool>(newWidth, newHeight);
+
+	// Copy the data from the old grid to the new one (if the new grid is larger)
+	for (int x = 0; x < std::min(curWidth, newWidth); x++)
+	{
+		for (int y = 0; y < std::min(curHeight, newHeight); y++)
+		{
+			newGrid->Get(x, y) = m_pGrid->Get(x, y);
+		}
+	}
+
+	// Handle scaling in the horizontal direction (width change)
+	if (newWidth > curWidth)
+	{
+		for (int x = curWidth; x < newWidth; x++)
+		{
+			for (int y = 0; y < newHeight; y++)
+			{
+				newGrid->Get(x, y) = (rand() % 100) < 30;  // Randomly set to true 30% of the time
+			}
+		}
+	}
+
+	// Handle scaling in the vertical direction (height change)
+	if (newHeight > curHeight)
+	{
+		for (int y = curHeight; y < newHeight; y++)
+		{
+			for (int x = 0; x < newWidth; x++)
+			{
+				newGrid->Get(x, y) = (rand() % 100) < 30;  // Randomly set to true 30% of the time
+			}
+		}
+	}
+
+	// If the new grid is smaller, no need to fill new cells since they are just discarded.
+
+	// Delete the old grid and assign the new grid
+	delete m_pGrid;
+	m_pGrid = newGrid;
+
+	// Reallocate the buffer for the new size
+	delete m_pBuffer;
+	m_pBuffer = new TMatrix<bool>(newWidth, newHeight);
+}
+
 void GameOfLife::Render()
 {
+	const auto pWindow = WindowContent::GetInstance().m_pWindow;
+	int windowWidth, windowHeight;
+	SDL_GetWindowSize(pWindow, &windowWidth, &windowHeight);
+	int newWidth = windowWidth / m_Scale;
+	int newHeight = windowHeight / m_Scale;
+
+	if(newWidth != m_pGrid->Rows() || newHeight != m_pGrid->Cols())
+	{
+		Resize(newWidth, newHeight);
+	}
+
 	const auto pRenderer = WindowContent::GetInstance().m_pRenderer;
 	SDL_SetRenderDrawColor(pRenderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
 	SDL_RenderClear(pRenderer);
